@@ -1,4 +1,4 @@
-/* longjmp, LoongArch version. 
+/* longjmp, LoongArch version.
    Copyright (C) 2020-2021 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
