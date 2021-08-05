@@ -1,6 +1,6 @@
 /* Copyright (C) 2021 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
-   
+
    Contributed by Loongson Technology Corporation Limited.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -66,7 +66,7 @@
  *  sin/cos(Inf) = NaN, raises invalid, sets errno to EDOM,
  *  sin/cos(NaN) = NaN.
  */
- 
+
 #define COSF __cosf
 
 #define LOADFD(rd, rs, label) \
@@ -106,7 +106,7 @@ LEAF(COSF)
     li.w          t1, 0x40e231d6                       /* 9*Pi/4 */
     la.local    t4, L(DP_)                           /*DP_ base addr*/
     bgeu        t0, t1, L(greater_or_equal_9pio4)    /* |x| >= 9*Pi/4 branch */
-/* L(median_args): */    
+/* L(median_args): */
     /* Here if Pi/4<=|x|<9*Pi/4 */
     fabs.d      fa0, fa1                             /* DP |x| */
     fld.d       fa1, t4, 56                          /* 4/Pi */
@@ -125,7 +125,7 @@ L(reduced):
     * y = t*t; z = y*y;
     * s = sign(x) * (-1.0)^((n>>2)&1)
     * result = s * (1.0+t^2*(C0+t^2*(C1+t^2*(C2+t^2*(C3+t^2*C4)))))
-    
+
     * Here if cos(x) calculated using sin(t) polynomial for |t|<Pi/4:
     * y = t*t; z = y*y;
     * s = sign(x) * (-1.0)^((n>>2)&1)
@@ -139,7 +139,7 @@ L(reduced):
     alsl.d      t2, t1, t4, 4                        /* adjust to DP_C or DP_S */
     fld.d       fa3, t2, 32                          /* C4 */
     andi        t0, t0, 8                            /* =====> (n << 1) & 8 */
-    fmul.d      fa1, fa0, fa0                        /* y=x^2 */    
+    fmul.d      fa1, fa0, fa0                        /* y=x^2 */
     fld.d       fa4, t2, 16                          /* C2 */
     fmul.d      fa2, fa1, fa1                        /* z=x^4 */
     fld.d       fa5, t2, 24                          /* C3 */
@@ -250,13 +250,13 @@ L(arg_less_pio4):
     li.w          t1, 0x3d000000                       /* const 2^-5 */
     blt         t0, t1, L(less_2pn5)                 /* |x| < 2^-5 branch */
 /* Here if 2^-5<=|x|<Pi/4 */
-/* 
-* Chebyshev polynomial of the form:
-* 1.0+x^2*(C0+x^2*(C1+x^2*(C2+x^2*(C3+x^2*C4)))).
-*/
+/*
+ * Chebyshev polynomial of the form:
+ * 1.0+x^2*(C0+x^2*(C1+x^2*(C2+x^2*(C3+x^2*C4)))).
+ */
     la.local    t0, L(DP_) /*DP_ base addr*/
     fld.d       fa3, t0, 96                          /* C4 */
-    fmul.d      fa1, fa1, fa1                        /* y=x^2 */    
+    fmul.d      fa1, fa1, fa1                        /* y=x^2 */
     fld.d       fa4, t0, 80                          /* C2 */
     fmul.d      fa2, fa1, fa1                        /* z=x^4 */
     fld.d       fa5, t0, 88                          /* C3 */
@@ -364,10 +364,10 @@ L(invpio4_table):                                    /* 4/Pi broken into sum of 
     .word   0x3560e410
 
 /* Coefficients of polynomial
-    for sin(x)~=x+x^3*DP_SIN2_0+x^5*DP_SIN2_1, |x|<2^-5.  
+    for sin(x)~=x+x^3*DP_SIN2_0+x^5*DP_SIN2_1, |x|<2^-5.
  */
 /* Coefficients of polynomial
-    for sin(t)~=t+t^3*(S0+t^2*(S1+t^2*(S2+t^2*(S3+t^2*S4)))), |t|<Pi/4.  
+    for sin(t)~=t+t^3*(S0+t^2*(S1+t^2*(S2+t^2*(S3+t^2*S4)))), |t|<Pi/4.
     for cos(t)~=1.0+t^2*(C0+t^2*(C1+t^2*(C2+t^2*(C3+t^2*C4)))), |t|<Pi/4.
  */
 
