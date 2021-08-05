@@ -108,7 +108,7 @@ LEAF(SINF)
     bstrpick.d  t5, t2, 31, 31                             /* sign of x */
     slli.w      t5, t5, 3
     bgeu        t0, t1, L(greater_or_equal_9pio4)          /* |x| >= 9*Pi/4 branch */
-/* L(median_args): */    
+/* L(median_args): */
 /* Here if Pi/4<=|x|<9*Pi/4 */
     fabs.d      fa0, fa1                                   /* DP |x| */
     fld.d       fa1, t4, 56                                /* 4/Pi */
@@ -127,7 +127,7 @@ L(reduced):
  * y = t*t; z = y*y;
  * s = sign(x) * (-1.0)^((n>>2)&1)
  * result = s * (1.0+t^2*(C0+t^2*(C1+t^2*(C2+t^2*(C3+t^2*C4)))))
-    
+
  * Here if cos(x) calculated using sin(t) polynomial for |t|<Pi/4:
  * y = t*t; z = y*y;
  * s = sign(x) * (-1.0)^((n>>2)&1)
@@ -252,13 +252,13 @@ L(arg_less_pio4):
     li.w          t1, 0x3d000000                             /* const 2^-5 */
     blt         t0, t1, L(less_2pn5)                       /* |x| < 2^-5 branch */
 /* Here if 2^-5<=|x|<Pi/4 */
-/* 
+/*
  * Chebyshev polynomial of the form:
  * 1.0+x^2*(C0+x^2*(C1+x^2*(C2+x^2*(C3+x^2*C4)))).
  */
     la.local    t0, L(DP_)                                 /*DP_ base addr*/
     fld.d       fa3, t0, 32                                /* S4 */
-    fmul.d      fa0, fa1, fa1                              /* y=x^2 */    
+    fmul.d      fa0, fa1, fa1                              /* y=x^2 */
     fld.d       fa4, t0, 16                                /* S2 */
     fmul.d      fa2, fa0, fa0                              /* z=x^4 */
     fld.d       fa5, t0, 24                                /* S3 */
