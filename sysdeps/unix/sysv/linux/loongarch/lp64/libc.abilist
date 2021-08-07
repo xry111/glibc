@@ -129,6 +129,7 @@ GLIBC_2.27 _IO_wfile_underflow F
 GLIBC_2.27 _IO_wfile_xsputn F
 GLIBC_2.27 _IO_wmarker_delta F
 GLIBC_2.27 _IO_wsetb F
+GLIBC_2.27 ___brk_addr D 0x8
 GLIBC_2.27 __adjtimex F
 GLIBC_2.27 __after_morecore_hook D 0x8
 GLIBC_2.27 __argz_count F
@@ -523,7 +524,7 @@ GLIBC_2.27 _res_hconf D 0x48
 GLIBC_2.27 _rpc_dtablesize F
 GLIBC_2.27 _seterr_reply F
 GLIBC_2.27 _setjmp F
-GLIBC_2.27 _sys_errlist D 0x438
+GLIBC_2.27 _sys_errlist D 0x2370
 GLIBC_2.27 _sys_nerr D 0x4
 GLIBC_2.27 _sys_siglist D 0x208
 GLIBC_2.27 _tolower F
@@ -1412,7 +1413,6 @@ GLIBC_2.27 pthread_attr_getschedparam F
 GLIBC_2.27 pthread_attr_getschedpolicy F
 GLIBC_2.27 pthread_attr_getscope F
 GLIBC_2.27 pthread_attr_init F
-GLIBC_2.27 pthread_attr_setaffinity_np F
 GLIBC_2.27 pthread_attr_setdetachstate F
 GLIBC_2.27 pthread_attr_setinheritsched F
 GLIBC_2.27 pthread_attr_setschedparam F
@@ -1428,8 +1428,6 @@ GLIBC_2.27 pthread_condattr_destroy F
 GLIBC_2.27 pthread_condattr_init F
 GLIBC_2.27 pthread_equal F
 GLIBC_2.27 pthread_exit F
-GLIBC_2.27 pthread_getaffinity_np F
-GLIBC_2.27 pthread_getattr_np F
 GLIBC_2.27 pthread_getschedparam F
 GLIBC_2.27 pthread_mutex_destroy F
 GLIBC_2.27 pthread_mutex_init F
@@ -1439,7 +1437,6 @@ GLIBC_2.27 pthread_self F
 GLIBC_2.27 pthread_setcancelstate F
 GLIBC_2.27 pthread_setcanceltype F
 GLIBC_2.27 pthread_setschedparam F
-GLIBC_2.27 pthread_sigmask F
 GLIBC_2.27 ptrace F
 GLIBC_2.27 ptsname F
 GLIBC_2.27 ptsname_r F
@@ -1819,7 +1816,7 @@ GLIBC_2.27 symlinkat F
 GLIBC_2.27 sync F
 GLIBC_2.27 sync_file_range F
 GLIBC_2.27 syncfs F
-GLIBC_2.27 sys_errlist D 0x438
+GLIBC_2.27 sys_errlist D 0x2370
 GLIBC_2.27 sys_nerr D 0x4
 GLIBC_2.27 sys_sigabbrev D 0x208
 GLIBC_2.27 sys_siglist D 0x208
@@ -2109,25 +2106,3 @@ GLIBC_2.30 getdents64 F
 GLIBC_2.30 gettid F
 GLIBC_2.30 tgkill F
 GLIBC_2.30 twalk_r F
-GLIBC_2.32 __libc_single_threaded D 0x1
-GLIBC_2.32 pthread_attr_getsigmask_np F
-GLIBC_2.32 pthread_attr_setaffinity_np F
-GLIBC_2.32 pthread_attr_setsigmask_np F
-GLIBC_2.32 pthread_getaffinity_np F
-GLIBC_2.32 pthread_getattr_np F
-GLIBC_2.32 pthread_sigmask F
-GLIBC_2.32 sigabbrev_np F
-GLIBC_2.32 sigdescr_np F
-GLIBC_2.32 strerrordesc_np F
-GLIBC_2.32 strerrorname_np F
-GLIBC_2.33 fstat F
-GLIBC_2.33 fstat64 F
-GLIBC_2.33 fstatat F
-GLIBC_2.33 fstatat64 F
-GLIBC_2.33 lstat F
-GLIBC_2.33 lstat64 F
-GLIBC_2.33 mallinfo2 F
-GLIBC_2.33 mknod F
-GLIBC_2.33 mknodat F
-GLIBC_2.33 stat F
-GLIBC_2.33 stat64 F
