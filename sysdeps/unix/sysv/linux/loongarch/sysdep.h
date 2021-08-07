@@ -1,22 +1,3 @@
-/* Copyright (C) 2021 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   Contributed by Loongson Technology Corporation Limited.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library.  If not, see
-   <http://www.gnu.org/licenses/>.  */
-
 #ifndef _LINUX_LOONGARCH_SYSDEP_H
 #define _LINUX_LOONGARCH_SYSDEP_H 1
 
@@ -34,9 +15,9 @@
 # undef PSEUDO
 # define PSEUDO(name, syscall_name, args)		\
 	ENTRY (name);					\
-	li.d	a7, SYS_ify (syscall_name);		\
+	dli	a7, SYS_ify (syscall_name);		\
 	syscall	0;					\
-	li.d	a7, -4096;				\
+	dli	a7, -4096;				\
 	bltu	a7, a0, .Lsyscall_error ## name;
 
 # undef PSEUDO_END
@@ -53,7 +34,7 @@
 	la	t0, rtld_errno;				\
 	sub.w	a0, zero, a0;				\
 	st.w	a0, t0, 0;				\
-	li.d	a0, -1;
+	dli	a0, -1;
 
 #  else
 
@@ -63,7 +44,7 @@
 	add.d	t0, tp, t0;				\
 	sub.w	a0, zero, a0;				\
 	st.w	a0, t0, 0;				\
-	li.d	a0, -1;
+	dli	a0, -1;
 
 #  endif
 # else
@@ -78,7 +59,7 @@
 # undef PSEUDO_NEORRNO
 # define PSEUDO_NOERRNO(name, syscall_name, args)	\
 	ENTRY (name);					\
-	li.d	a7, SYS_ify (syscall_name);		\
+	dli	a7, SYS_ify (syscall_name);		\
 	syscall	0;
 
 # undef PSEUDO_END_NOERRNO
@@ -131,10 +112,10 @@
 # undef INLINE_SYSCALL
 # define INLINE_SYSCALL(name, nr, args...)				\
   ({ INTERNAL_SYSCALL_DECL (err);					\
-     long int __sys_result = INTERNAL_SYSCALL (name, nr, args);	\
-     if (__glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (__sys_result)))  \
+     long int __sys_result = INTERNAL_SYSCALL (name, err, nr, args);	\
+     if (__glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (__sys_result, )))  \
        {								\
-         __set_errno (INTERNAL_SYSCALL_ERRNO (__sys_result));		\
+         __set_errno (INTERNAL_SYSCALL_ERRNO (__sys_result, ));		\
 	 __sys_result = (unsigned long) -1;				\
        }								\
      __sys_result; })
@@ -142,13 +123,18 @@
 
 # define INTERNAL_SYSCALL_DECL(err) do { } while (0)
 
-# define INTERNAL_SYSCALL(name, nr, args...) \
-	internal_syscall##nr (SYS_ify (name), args)
+# define INTERNAL_SYSCALL_ERROR_P(val, err) \
+	((unsigned long int) (val) > -4096UL)
 
-# define INTERNAL_SYSCALL_NCS(number, nr, args...) \
-	internal_syscall##nr (number, args)
+# define INTERNAL_SYSCALL_ERRNO(val, err) (-(val))
 
-# define internal_syscall0(number, dummy...)			\
+# define INTERNAL_SYSCALL(name, err, nr, args...) \
+	internal_syscall##nr (SYS_ify (name), err, args)
+
+# define INTERNAL_SYSCALL_NCS(number, err, nr, args...) \
+	internal_syscall##nr (number, err, args)
+
+# define internal_syscall0(number, err, dummy...)			\
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -165,7 +151,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall1(number, arg0)				\
+# define internal_syscall1(number, err, arg0)				\
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -183,7 +169,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall2(number, arg0, arg1)	    		\
+# define internal_syscall2(number, err, arg0, arg1)	    		\
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -203,7 +189,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall3(number, arg0, arg1, arg2)      		\
+# define internal_syscall3(number, err, arg0, arg1, arg2)      		\
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -225,7 +211,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall4(number, arg0, arg1, arg2, arg3)	  	\
+# define internal_syscall4(number, err, arg0, arg1, arg2, arg3)	  	\
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -249,7 +235,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall5(number, arg0, arg1, arg2, arg3, arg4)   \
+# define internal_syscall5(number, err, arg0, arg1, arg2, arg3, arg4)   \
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -275,7 +261,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall6(number, arg0, arg1, arg2, arg3, arg4, arg5) \
+# define internal_syscall6(number, err, arg0, arg1, arg2, arg3, arg4, arg5) \
 ({ 									\
 	long int _sys_result;						\
 									\
@@ -304,7 +290,7 @@
 	_sys_result;							\
 })
 
-# define internal_syscall7(number, arg0, arg1, arg2, arg3, arg4, arg5, arg6) \
+# define internal_syscall7(number, err, arg0, arg1, arg2, arg3, arg4, arg5, arg6) \
 ({ 									\
 	long int _sys_result;						\
 									\
