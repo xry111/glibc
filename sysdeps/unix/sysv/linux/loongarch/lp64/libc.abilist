@@ -701,6 +701,7 @@ GLIBC_2.35 epoll_create F
 GLIBC_2.35 epoll_create1 F
 GLIBC_2.35 epoll_ctl F
 GLIBC_2.35 epoll_pwait F
+GLIBC_2.35 epoll_pwait2 F
 GLIBC_2.35 epoll_wait F
 GLIBC_2.35 erand48 F
 GLIBC_2.35 erand48_r F
@@ -1382,6 +1383,7 @@ GLIBC_2.35 posix_spawn_file_actions_addclosefrom_np F
 GLIBC_2.35 posix_spawn_file_actions_adddup2 F
 GLIBC_2.35 posix_spawn_file_actions_addfchdir_np F
 GLIBC_2.35 posix_spawn_file_actions_addopen F
+GLIBC_2.35 posix_spawn_file_actions_addtcsetpgrp_np F
 GLIBC_2.35 posix_spawn_file_actions_destroy F
 GLIBC_2.35 posix_spawn_file_actions_init F
 GLIBC_2.35 posix_spawnattr_destroy F
