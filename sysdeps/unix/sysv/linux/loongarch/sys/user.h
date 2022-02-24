@@ -23,10 +23,20 @@
 
 struct user_regs_struct
 {
-  uint64_t gpr[32];
-  uint64_t pc;
-  uint64_t badvaddr;
-  uint64_t reserved[11];
+  /* Saved main processor registers. */
+  uint64_t regs[32];
+
+  /* Saved special registers. */
+  uint64_t orig_a0;
+  uint64_t csr_era;
+  uint64_t csr_badv;
+  uint64_t reserved[10];
+};
+
+struct user_fp_struct {
+  uint64_t    fpr[32];
+  uint64_t    fcc;
+  uint32_t    fcsr;
 };
 
 #endif /* _SYS_USER_H */
