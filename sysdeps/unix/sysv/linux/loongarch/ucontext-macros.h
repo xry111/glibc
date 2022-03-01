@@ -29,7 +29,4 @@
 #define RESTORE_INT_REG(name, num, base) \
   REG_L name, base, ((num) *SZREG + MCONTEXT_GREGS)
 
-#define SAVE_REG(name, offset, base) REG_S name, base, (offset)
-
-#define RESTORE_REG(name, offset, base) REG_L name, base, (offset)
 #endif /* _LINUX_LOONGARCH_UCONTEXT_MACROS_H */
