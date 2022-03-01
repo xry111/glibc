@@ -23,7 +23,6 @@
 #include <sysdeps/generic/sysdep.h>
 
 /* Macros to handle different pointer/register sizes for 32/64-bit code.  */
-#define PTRLOG 3
 #define SZREG 8
 #define SZFREG 8
 #define REG_L ld.d
