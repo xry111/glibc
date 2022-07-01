@@ -221,10 +221,10 @@ elf_machine_rela (struct link_map *map, struct r_scope_elem *scope[],
 	value = ((ElfW (Addr) (*) (void)) value) ();
       *addr_field = value;
       break;
+#endif
 
     case R_LARCH_NONE:
       break;
-#endif
 
     default:
       _dl_reloc_bad_type (map, r_type, 0);
